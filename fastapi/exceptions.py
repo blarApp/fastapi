@@ -147,8 +147,9 @@ class FastAPIError(RuntimeError):
 
 
 class ValidationException(Exception):
-    def __init__(self, errors: Sequence[Any]) -> None:
+    def __init__(self, errors: Sequence[Any], mistakes: Sequence[Any]) -> None:
         self._errors = errors
+        self._mistakes = mistakes
 
     def errors(self) -> Sequence[Any]:
         return self._errors
