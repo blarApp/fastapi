@@ -12,6 +12,12 @@ async def http_exception_handler(request: Request, exc: HTTPException) -> Respon
     headers = getattr(exc, "headers", None)
     if not is_body_allowed_for_status_code(exc.status_code):
         return Response(status_code=exc.status_code, headers=headers)
+    if isinstance(exc.detail, dict):
+        # If the detail is a dict, we assume it is a JSON serializable object
+        # and we return it as JSON.
+        return JSONResponse(
+            content=jsonable_encoder(exc.detail), status_code=exc.status_code, headers=headers
+        )
     return JSONResponse(
         {"detail": exc.detail}, status_code=exc.status_code, headers=headers
     )

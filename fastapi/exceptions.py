@@ -160,9 +160,6 @@ class RequestValidationError(ValidationException):
         self.body = body
 
 
-class WebSocketRequestValidationError(ValidationException):
-    pass
-
 
 class ResponseValidationError(ValidationException):
     def __init__(self, errors: Sequence[Any], *, body: Any = None) -> None:
